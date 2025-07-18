@@ -1,36 +1,68 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  padding: 20px;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
 }
 
 .container {
   max-width: 600px;
-  margin: auto;
-  background: white;
-  padding: 30px;
+  margin: 50px auto;
+  background: #fff;
+  padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-h1, h2 {
+h1 {
   text-align: center;
+  color: #333;
+}
+
+button {
+  display: inline-block;
+  margin: 10px 5px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.calculate-btn {
+  background-color: #2196f3;
+  color: white;
+}
+
+.remove-btn {
+  background-color: #f44336;
+  color: white;
 }
 
 .course {
   display: flex;
-  gap: 10px;
+  align-items: center;
   margin-bottom: 10px;
 }
 
-.course input, .course select {
-  padding: 5px;
-  flex: 1;
+.course-number {
+  margin-right: 10px;
+  font-weight: bold;
 }
 
-button {
-  margin: 5px;
-  padding: 10px 15px;
-  font-size: 16px;
-  cursor: pointer;
+.course-grade, .course-credits {
+  margin: 0 10px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#result {
+  text-align: center;
+  font-size: 1.5em;
+  color: #333;
 }

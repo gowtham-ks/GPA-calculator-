@@ -1,57 +1,66 @@
+// Grade mapping
+const gradeMapping = {
+  'O': 4.0,
+  'A+': 3.7,
+  'A': 3.5,
+  'B+': 3.0,
+  'B': 2.7,
+  'C': 2.0,
+  'D': 1.0,
+  'F': 0.0
+};
+
+// Function to add a new course input
 let courseCount = 0;
 
 function addCourse() {
-  const container = document.getElementById('course-container');
-  const div = document.createElement('div');
-  div.className = 'course';
-  div.innerHTML = `
-    <input type="text" placeholder="Course Name" required>
-    <input type="number" placeholder="Credits" min="1" required>
-    <select>
+  courseCount++;
+  const courseContainer = document.getElementById('course-container');
+
+  const courseDiv = document.createElement('div');
+  courseDiv.className = 'course';
+
+  courseDiv.innerHTML = `
+    <span class="course-number">Course ${courseCount}</span>
+    <select class="course-grade">
+      <option value="O">O</option>
+      <option value="A+">A+</option>
       <option value="A">A</option>
-      <option value="A-">A-</option>
       <option value="B+">B+</option>
       <option value="B">B</option>
-      <option value="B-">B-</option>
-      <option value="C+">C+</option>
       <option value="C">C</option>
       <option value="D">D</option>
       <option value="F">F</option>
     </select>
+    <input type="number" placeholder="Credits" class="course-credits" step="0.5" min="0">
+    <button class="remove-btn" onclick="removeCourse(this)">❌ Remove</button>
   `;
-  container.appendChild(div);
+
+  courseContainer.appendChild(courseDiv);
 }
 
-function gradeToPoints(grade) {
-  const scale = {
-    'A': 4.0,
-    'A-': 3.7,
-    'B+': 3.3,
-    'B': 3.0,
-    'B-': 2.7,
-    'C+': 2.3,
-    'C': 2.0,
-    'D': 1.0,
-    'F': 0.0
-  };
-  return scale[grade] || 0;
+// Function to remove a course input
+function removeCourse(button) {
+  const courseDiv = button.parentElement;
+  courseDiv.remove();
 }
 
+// Function to calculate CGPA
 function calculateGPA() {
   const courses = document.querySelectorAll('.course');
   let totalCredits = 0;
-  let totalPoints = 0;
+  let weightedGradeSum = 0;
 
   courses.forEach(course => {
-    const credits = parseFloat(course.children[1].value);
-    const grade = course.children[2].value;
+    const grade = course.querySelector('.course-grade').value;
+    const credits = parseFloat(course.querySelector('.course-credits').value);
 
-    if (!isNaN(credits)) {
+    if (gradeMapping[grade] !== undefined && !isNaN(credits)) {
+      weightedGradeSum += gradeMapping[grade] * credits;
       totalCredits += credits;
-      totalPoints += credits * gradeToPoints(grade);
     }
   });
 
-  const gpa = totalCredits ? (totalPoints / totalCredits).toFixed(2) : '--';
-  document.getElementById('result').textContent = `GPA: ${gpa}`;
+  const cgpa = totalCredits > 0 ? (weightedGradeSum / totalCredits).toFixed(2) : '--';
+  document.getElementById('result').textContent = `GPA: ${cgpa}`;
 }
